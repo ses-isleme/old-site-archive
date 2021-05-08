@@ -42,7 +42,7 @@ module.exports = {
             },
             {
               label: 'Otomatik Enstrüman Tanıma',
-              to: '/bolumler/otomatik-enstruman-tanima/create-a-page',
+              to: '/bolumler/otomatik-enstruman-tanima/giris',
             },
           ],
         },
