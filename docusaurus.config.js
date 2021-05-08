@@ -8,8 +8,11 @@ module.exports = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'ses-isleme', // Usually your GitHub org/user name.
-  projectName: 'ses-isleme', // Usually your repo name.
+  projectName: 'ses-isleme.github.io', // Usually your repo name.
   themeConfig: {
+    googleAnalytics: {
+      trackingID: 'UA-196606878-1',
+    },
     navbar: {
       title: 'Python ile Uygulamalı Ses İşlemeye Giriş',
       logo: {
