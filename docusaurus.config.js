@@ -9,6 +9,10 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'ses-isleme', // Usually your GitHub org/user name.
   projectName: 'ses-isleme.github.io', // Usually your repo name.
+  i18n: {
+    defaultLocale: 'tr',
+    locales: ['tr'],
+  },
   themeConfig: {
     googleAnalytics: {
       trackingID: 'UA-196606878-1',
