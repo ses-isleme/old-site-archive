@@ -92,7 +92,7 @@ module.exports = {
           routeBasePath: 'bolumler',
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/ses-isleme/ses-isleme.github.io/edit/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
