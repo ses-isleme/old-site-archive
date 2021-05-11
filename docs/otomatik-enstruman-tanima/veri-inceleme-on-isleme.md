@@ -4,6 +4,10 @@ sidebar_position: 2
 
 # Veri İnceleme ve Ön İşleme
 
+:::caution Kitap Hazırlanma Aşamasındadır
+Kitabın içeriği üzerinde aktif olarak çalışmaktayız. Bu uyarıyı gördüğünüz içerikler taslak halindedir ve değişiklik gösterebilir.
+:::
+
 Temel kütüphaneleri yükleyerek kodumuza başlayabiliriz.
 
 ```python title='Kütüphanelerin yüklenmesi'

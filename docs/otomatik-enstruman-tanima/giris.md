@@ -5,6 +5,10 @@ sidebar_label: Giriş
 
 # Otomatik ses sınıflandırma
 
+:::caution Kitap Hazırlanma Aşamasındadır
+Kitabın içeriği üzerinde aktif olarak çalışmaktayız. Bu uyarıyı gördüğünüz içerikler taslak halindedir ve değişiklik gösterebilir.
+:::
+
 Otomatik ses sınıflandırma, verilen bir ses kaydının  tanımlanmış kategorilerden hangisine ait olduğunun otomatik bulunması işlemidir ve giderek artan sayıda uygulamada kullanılmaktadır. Bu uygulamalara örnek olarak [çevresel ses sınıflandırma](https://paperswithcode.com/task/environmental-sound-classification), [konuşma tanıma](https://paperswithcode.com/task/speech-recognition) (bu problemde kaydın küçük kesitleri sınıflandırılmaktadır), [hastalık tespiti için kalp sesi sınıflandırması](https://paperswithcode.com/task/ecg-classification) gibi örnekler verilebilir. Bu bölümde amacımız otomatik enstrüman sesi sınıflandırması problemi üzerinden otomatik ses sınıflandırması sistem tasarımı problemini ele almak ve ilgili okuyuculara bu konu için bir başlangıç noktası sağlamaktır. İçerik, araştırma materyalinden çok eğitim materyali olarak düşünülmelidir. Bu konudaki güncel araştırmalara ulaşmak için [Google Scholar](https://scholar.google.com/scholar?as_ylo=2017&q=musical+instrument+classification&hl=en&as_sdt=0,5) üzerinden makalelere erişmenizi ve incelemenizi öneririz. 
 
 Herhangi bir makine öğrenmesi problemini ele alırken öncelikle aşağıdaki adımları izlemeliyiz:
