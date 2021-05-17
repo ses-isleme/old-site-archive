@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: ses-isleme.github.io
+Token: 7cb85cd2614d8c570b67a6862931ef1c478b9d8fa1ff490620419f52319ad521

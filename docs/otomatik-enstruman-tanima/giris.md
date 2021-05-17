@@ -36,5 +36,5 @@ Bu problemde sınırları şu şekilde belirledik:
 Daha kolay takip edilebilmesi için bölümü üç aşamaya ayırdık. 
 
 1.   [**Veri inceleme ve ön işleme:**](./veri-inceleme-on-isleme) Öncelikle verileri indirip inceleyecek, içeriğini anlamaya çalışacak ve testlerde kullanılabilmesi için bir dizi ön işleme adımına tabi tutacağız. Veriler üzerine inceleme yapmak problemin doğasını anlamak için kullanılmasını şiddetle tavsiye ettiğimiz bir yöntemdir. Uygun temsillerin ve modellerin seçilebilmesi için önemli bir gerekliliktir.
-2.   [**Öznitelik hesaplama:**](./oznitelik-hesaplama) Her bir örnek/kayıt için öznitelikleri hesaplayacak ve öznitelik uzayında bazı incelemeler yapacağız. Daha iyi sonuçlar alabilmek için öznitelikler üzerinde uygulayabileceğimiz bir dizi ön işleme adımını ele alacağız.
+2.   [**Öznitelik çıkarımı:**](./oznitelik-cikarimi) Her bir örnek/kayıt için öznitelikleri hesaplayacak ve öznitelik uzayında bazı incelemeler yapacağız. Daha iyi sonuçlar alabilmek için öznitelikler üzerinde uygulayabileceğimiz bir dizi ön işleme adımını ele alacağız.
 3.   [**Sınıflandırıcı tasarımı ve testleri**](./siniflandirici-tasarimi): Bu noktada `sklearn` kütüphanesinde varolan hazır tasarımları kullanacak ve veriler üzerinde performanslarını karşılaştıracağız.

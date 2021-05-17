@@ -82,21 +82,20 @@ Klasöre çıkarttığımız dosyaların listesini oluşturmalıyız. Dosyalara 
 veri_klasoru = 'instrument'
 # Her enstrüman için dosya listesi taşıyacak kütüphane tanımlayıp kullanalım
 enstruman_dosyalari = dict()
-# Tüm alt klasörler içerisinde gezinerek .aif, .aiff uzantılı dosyaların listesini toplama
-# Enstrüman ismi/etiketi dosya isminde mevcut, bu bilgiyi dosya isminden çekeceğiz
+# Tüm alt klasörler içerisindeki .aif, .aiff dosyalarının listesini toplama
+# Enstrüman etiketi dosya isminde mevcut, bu bilgiyi dosya isminden çekeceğiz
 for kok_klasor, klasorler, dosyalar in os.walk(veri_klasoru):
     for dosya in dosyalar:
         # .ff. içeren ses dosyalarını kullanacağız
-        if (dosya.endswith('.aif') or dosya.endswith('.aiff')) and ('.ff.' in dosya):
+        if (dosya.endswith('.aif') or dosya.endswith('.aiff')) and '.ff.' in dosya:
             dosya_ismi = os.path.join(kok_klasor, dosya)
             enstruman = dosya.split('.')[0]
-            if(len(enstruman) > 0):  # bu kontrol MACOS'te ._ ile başlayan dosya adları düşünülerek eklendi
-                dosyalar = enstruman_dosyalari.get(enstruman)
-                if dosyalar == None:  # henüz enstrüman için hiç dosya eklenmemiş ise ilkini ekle
-                    dosyalar = [dosya_ismi]
-                else:  # enstrüman için dosya listesi mevcut ise listeye yeni dosyayı ekle
-                    dosyalar.append(dosya_ismi)
-                enstruman_dosyalari[enstruman] = dosyalar
+            # bu kontrol MACOS'te ._ ile başlayan dosya adları düşünülerek eklendi
+            if len(enstruman) > 0:
+                if enstruman not in enstruman_dosyalari:
+                    enstruman_dosyalari[enstruman] = [dosya_ismi]
+                else:
+                    enstruman_dosyalari[enstruman].append(dosya_ismi)
 
 # Oluşturduğumuz dosya listesine bakalım
 enstruman_dosyalari
@@ -197,14 +196,17 @@ for i, enstruman in enumerate(enstruman_dosyalari.keys()):
     plt.xlabel('zaman(örnek sayısı)')
 ```
 
-![png](/img/otomatik-enstruman-tanima/ornek-dalga-formu.png)
+![Örnek Dalga Formu](/img/otomatik-enstruman-tanima/ornek-dalga-formu.png)
     
 Veriden bir dizi örnek dinlemekte fayda var. 
 
 
-```python
-# Vibrafon klasöründeki ilk kayıt
-IPython.display.Audio(ess.MonoLoader(filename=enstruman_dosyalari['Vibraphone'][0], sampleRate=fs)(), rate=fs)
+```python title='Vibrafon klasöründeki ilk kayıt'
+IPython.display.Audio(
+    ess.MonoLoader(
+        filename=enstruman_dosyalari['Vibraphone'][0],
+        sampleRate=fs)(),
+    rate=fs)
 ```
 
 
@@ -215,9 +217,12 @@ IPython.display.Audio(ess.MonoLoader(filename=enstruman_dosyalari['Vibraphone'][
 </audio>
 
 
-```python
-# Flüt klasöründeki ilk kayıt
-IPython.display.Audio(ess.MonoLoader(filename=enstruman_dosyalari['flute'][0], sampleRate=fs)(), rate=fs)
+```python title='Flüt klasöründeki ilk kayıt'
+IPython.display.Audio(
+    ess.MonoLoader(
+        filename=enstruman_dosyalari['flute'][0],
+        sampleRate=fs)(),
+    rate=fs)
 ```
 
 
@@ -237,13 +242,13 @@ Verinin yapısına, içeriğine ve etiketlerine bağlı olarak yapılması gerek
 
 
 ```python title='Ham veri ön işleme parametreleri'
-
 # kayıttan alınacak kesit uzunluğu (örnek sayısı cinsinden)
 pencere_boyutu = 4096 * 4
 # ardışık kesitler arası uzaklık (örnek sayısı cinsinden)
 kaydirma_miktari = 4096 * 2
 enerji_esik_orani = 0.01
-# Birden fazla paramete kullanırken bu parametreleri tek bir sözlük içerisine yerleştirip kullanmak daha anlaşılır bir kod yazmamıza yardım edebilir
+# Birden fazla paramete kullanırken bu parametreleri tek bir sözlük içerisine
+# yerleştirip kullanmak daha anlaşılır bir kod yazmamıza yardım edebilir
 parametreler = {
     "fs": fs,
     "pencere_boyutu": pencere_boyutu,
@@ -256,20 +261,25 @@ parametreler = {
 ```python title='Dosya bölütleme fonksiyonu'
 def dosya_bolutle(dosya_ismi, parametreler):
     '''
-    Enerji eşik değeri kullanarak kaydın sessiz bölgelerinden bölünmesini sağlayacak sınırları tespit eder. 
-    Öncelikle kayıt küçük parçalara bölünerek her kesit için enerji hesaplanmakta
-    ardından bu enerji değerlerinin eşik değeriyle karşılaştırılması sonucu kesitin
-    sesli mi sessiz mi olduğuna karar verilmektedir. Bu bilgi bolut_karar_fonk 
-    içerisinde 0 ve 1 değerleriyle belirtilmektedir. 0-1 ve 1-0 geçişleri ise 
-    kayıtların sınırlarını bulmakta kullanılmakta, bunun için bolut_karar_fonk'nun
-    türevi işlenmektedir
+    Enerji eşik değeri kullanarak kaydın sessiz bölgelerinden bölünmesini 
+    sağlayacak sınırları tespit eder. Öncelikle kayıt küçük parçalara bölünerek
+    her kesit için enerji hesaplanmakta ardından bu enerji değerlerinin eşik
+    değeriyle karşılaştırılması sonucu kesitin sesli mi sessiz mi olduğuna karar
+    verilmektedir. Bu bilgi bolut_karar_fonk içerisinde 0 ve 1 değerleriyle 
+    belirtilmektedir. 0-1 ve 1-0 geçişleri ise kayıtların sınırlarını bulmakta
+    kullanılmakta, bunun için bolut_karar_fonk'nun türevi işlenmektedir
     '''
     ses = ess.MonoLoader(filename=dosya_ismi, sampleRate=fs)()
-    enerjiler = []  # her kesitin enerji değerini bir sayı olarak bir listede tutacağız
+    enerjiler = []  # kesitlerin enerji değerlerini bir listede tutacağız
     # Pencereleme ve her veri penceresi için enerji hesabı
-    for frame in ess.FrameGenerator(ses, frameSize=pencere_boyutu, hopSize=kaydirma_miktari, startFromZero=True):
+    for frame in ess.FrameGenerator(
+            ses,
+            frameSize=pencere_boyutu,
+            hopSize=kaydirma_miktari,
+            startFromZero=True):
         enerjiler.append(ess.Energy()(frame))
-    # listeden numpy-array'e dönüştürme: bu adım diziler üzerinde alttaki işlemleri yapabilmek için gerekli
+    # listeden numpy-array'e dönüştürme:
+    # bu adım diziler üzerinde alttaki işlemleri yapabilmek için gerekli
     enerjiler = np.array(enerjiler)
     # Genlik normalizasyonu
     enerjiler = enerjiler / np.max(enerjiler)
@@ -282,10 +292,13 @@ def dosya_bolutle(dosya_ismi, parametreler):
     bolut_karar_fonk = np.insert(bolut_karar_fonk, 0, 0)
     fark_fonksiyonu = np.diff(bolut_karar_fonk)
     # Baslangic endeksleri: 0'dan 1'e geçiş
-    baslangic_endeksleri = np.nonzero(fark_fonksiyonu > 0)[0] * kaydirma_miktari
+    baslangic_endeksleri = np.nonzero(fark_fonksiyonu > 0)[
+        0] * kaydirma_miktari
     # Bitis endeksleri: 1'den 0'a geçiş
-    bitis_endeksleri = np.nonzero(fark_fonksiyonu < 0)[0] * kaydirma_miktari
-    return (ses, enerjiler, bolut_karar_fonk, baslangic_endeksleri, bitis_endeksleri)
+    bitis_endeksleri = np.nonzero(fark_fonksiyonu < 0)[
+        0] * kaydirma_miktari
+    return (ses, enerjiler, bolut_karar_fonk,
+            baslangic_endeksleri, bitis_endeksleri)
 ```
 
 Her enstrüman için 3 örnek dosyada bölütleme işlemini kontrol için sınırları ses verileriyle beraber çizdirelim
@@ -317,9 +330,6 @@ for dosya_endeksi in range(ornek_dosya_sayisi):
 plt.legend(loc="best")
 ```
 
-    <matplotlib.legend.Legend at 0x7f4927e868d0>
-
-    
 ![Örnek Bölütler](/img/otomatik-enstruman-tanima/ornek-bolutler.png)
 
 
@@ -343,14 +353,18 @@ for enstruman, dosyalar in enstruman_dosyalari.items():
          bitis_endeksleri) = dosya_bolutle(ornek_dosya, parametreler)
         # Bölütleme, normalizasyon ve dosyaya yazma
         for baslangic, bitis in zip(baslangic_endeksleri, bitis_endeksleri):
-            if bitis - baslangic > fs/3:  # bölütlemede hata sonucu çok kısa kesitler oluşabilir, sadece 1/3 saniye'den uzun olanları tutalım
+            # bölütlemede hata sonucu çok kısa kesitler oluşabilir,
+            # sadece 1/3 saniye'den uzun olanları tutalım
+            if bitis - baslangic > fs/3:
                 ses_seg = ses[baslangic: bitis]
-                # Yanlışlıkla küçük bir sessizlik bolumu bolut olarak alınmış olabilir, enerjisini kontrol ederek düşükse dışarıda bırakalım
-                if(np.max(np.abs(ses_seg)) > 0.05):
+                # Küçük bir sessizlik bolumu bolut olarak alınmış olabilir,
+                # enerjisini kontrol ederek düşükse dışarıda bırakalım
+                if np.max(np.abs(ses_seg)) > 0.05:
                     # Genlik normalizasyonu
                     ses_seg = ses_seg / np.max(np.abs(ses_seg))
                     dosya_ismi = os.path.join(
-                        bolutler_klasoru, enstruman + '_' + str(dosya_sayaci) + '.wav')
+                        bolutler_klasoru, 
+                        enstruman + '_' + str(dosya_sayaci) + '.wav')
                     ess.MonoWriter(filename=dosya_ismi,
                                    format='wav', sampleRate=fs)(ses_seg)
                     dosya_sayaci += 1
@@ -364,8 +378,8 @@ print(len(bolut_dosyalari), 'adet bölütlenmiş dosya oluşturuldu')
 ```
 
 ```python title='Klasör içindeki tüm dosyaları silmek için yardımcı fonksiyon'
-# Ihtiyaç duyarsanız(yanlış işlemle çok sayıda dosya oluşturduysanız)
-# bu hücredeki fonksiyonu bir klasör içerisindeki tüm dosyaları silmek için kullanabilirsiniz
+# Ihtiyaç duyarsanız (yanlış işlemle çok sayıda dosya oluşturduysanız)
+# bu fonksiyonu bir klasör içerisindeki tüm dosyaları silmek için kullanabilirsiniz
 def klasoru_temizle(ana_klasor):
     '''Verilen klasordeki tum dosyalari siler'''
     for root, dirs, files in os.walk(ana_klasor):

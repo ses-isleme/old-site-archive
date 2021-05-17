@@ -1,6 +1,9 @@
 # Dependencies
 /node_modules
 
+# Notebooks (for now)
+/notebooks
+
 # Production
 /build
 
