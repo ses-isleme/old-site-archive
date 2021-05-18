@@ -23,6 +23,9 @@ import importlib.util
 if importlib.util.find_spec('essentia') is None:
   !pip install essentia
 import essentia.standard as ess
+
+# Rastgelelik kontrolü için 'seed' ekleyelim
+np.random.seed(0)
 ```
 
 ## Ham verinin toplanıp incelenmesi 
@@ -34,7 +37,6 @@ import essentia.standard as ess
 ```python title='UIOWA:MIS veri kümesinden örneklerin indirilmesi'
 import urllib.request
 import zipfile
-import os
 import sys
 import shutil
 
