@@ -295,10 +295,6 @@ Sınıflandırıcı modelimizi eğitmeye başlamadan önce öznitelik verimiz ü
 
 Çok farklı normalizasyon stratejileri mevcuttur ve kullanılan modele uygun bir strateji tercih edilmelidir. Bu konuda kısa bir özet incelemek isterseniz: [Normalization Techniques At A Glance](https://developers.google.com/machine-learning/data-prep/transform/normalization) ya da [Compare the effect of different scalers on data with outliers](https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html#sphx-glr-auto-examples-preprocessing-plot-all-scaling-py) sayfalarını inceleyebilirsiniz. Bu bölümde yaygın kullanılan yöntemlerden birisi olan "Standard scaling"i `sklearn` kütüphanesinde gerçeklendiği şekliyle kullanacağız.
 
-| ![space-1.jpg](/img/otomatik-enstruman-tanima/normalization.png) |
-| :--------------------------------------------------------------: |
-|   _"Standard Scaling"in örnek bir veri seti üzerindeki etkisi_   |
-
 ```python title='sklearn kütüphanesinin preprocessing araçları ile normalizasyon'
 from sklearn import preprocessing
 
