@@ -4,6 +4,10 @@ sidebar_position: 3
 
 # Öznitelik Çıkarımı
 
+:::caution Kitap Hazırlanma Aşamasındadır
+Kitabın içeriği üzerinde aktif olarak çalışmaktayız. Bu uyarıyı gördüğünüz içerikler taslak halindedir ve değişiklik gösterebilir.
+:::
+
 Şimdi bölütlenmiş her bir ses dosyası için öznitelikler hesaplayıp kategori/etiket/enstrüman bilgisi ile beraber tek bir veri dosyası içerisine yazabiliriz. Öznitelik çıkarımı için Essentia kütüphanesinin [MusicExtractor](https://essentia.upf.edu/documentation/reference/std_MusicExtractor.html) fonksiyonunu kullanacağız.
 
 Öncelikle tek bir dosya için çalıştırıp verdiği çıktıyı inceleyelim:

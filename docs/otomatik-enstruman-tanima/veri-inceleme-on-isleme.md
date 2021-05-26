@@ -252,10 +252,10 @@ enerji_esik_orani = 0.01
 # Birden fazla paramete kullanırken bu parametreleri tek bir sözlük içerisine
 # yerleştirip kullanmak daha anlaşılır bir kod yazmamıza yardım edebilir
 parametreler = {
-    "fs": fs,
-    "pencere_boyutu": pencere_boyutu,
-    "kaydirma_miktari": kaydirma_miktari,
-    "enerji_esik_orani": enerji_esik_orani
+    'fs': fs,
+    'pencere_boyutu': pencere_boyutu,
+    'kaydirma_miktari': kaydirma_miktari,
+    'enerji_esik_orani': enerji_esik_orani
 }
 ```
 
@@ -329,7 +329,7 @@ for dosya_endeksi in range(ornek_dosya_sayisi):
         plt.vlines(bitis_endeksleri, ymin=-0.5, ymax=0, colors='k',
                    linestyles='dashed', label='Bölüt bitişi')
 
-plt.legend(loc="best")
+plt.legend(loc='best')
 ```
 
 ![Örnek Bölütler](/img/otomatik-enstruman-tanima/ornek-bolutler.png)
